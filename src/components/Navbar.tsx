@@ -1,18 +1,21 @@
 import { Layout, Menu, Row } from "antd";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { useHistory } from "react-router-dom";
 import { useSelectorType } from "../hooks/useSelectorType";
-import { RouteNames } from "../routes";
+import { authActionCreators } from "../store/actionCreators/actionCreatorsUser";
 
 const Navbar: React.FC = () => {
-  const router = useHistory();
-  const { isAuth } = useSelectorType((state) => state.authReducer);
+  //   const router = useHistory();
+  const dispatch = useDispatch();
+  const { isAuth, user } = useSelectorType((state) => state.authReducer);
+  const logout = () => dispatch(authActionCreators.logout());
   return (
     <Layout.Header>
       <Row justify="end">
         {isAuth ? (
           <>
-            <div style={{ color: "white" }}>User name</div>
+            <div style={{ color: "white" }}>{user.username}</div>
             <Menu theme="dark" mode="horizontal" selectable={false}>
               <Menu.Item
                 onClick={() => console.log("Logout was pressed")}
@@ -24,7 +27,7 @@ const Navbar: React.FC = () => {
           </>
         ) : (
           <Menu theme="dark" mode="horizontal" selectable={false}>
-            <Menu.Item onClick={() => router.push(RouteNames.LOGIN)} key={1}>
+            <Menu.Item onClick={logout} key={1}>
               Login
             </Menu.Item>
           </Menu>
