@@ -9,9 +9,10 @@ import { dateTransorm } from "../utilits/dateTransform";
 type PropsType = {
   users: User[];
   author: string;
+  submit: (event: Event) => void;
 };
 
-const EventForm: React.FC<PropsType> = ({ users, author }) => {
+const EventForm: React.FC<PropsType> = ({ users, author, submit }) => {
   const [event, setEvent] = React.useState({
     author: author,
     guest: "",
@@ -26,7 +27,7 @@ const EventForm: React.FC<PropsType> = ({ users, author }) => {
   };
 
   const submitForm = () => {
-    console.log(event);
+    submit(event);
   };
 
   return (
